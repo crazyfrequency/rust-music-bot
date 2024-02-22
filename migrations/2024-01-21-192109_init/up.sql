@@ -1,0 +1,19 @@
+-- Your SQL goes here
+CREATE TABLE IF NOT EXISTS guild_settings (
+    id BIGINT UNIQUE PRIMARY KEY NOT NULL,
+    speed DOUBLE NOT NULL DEFAULT 1.0,
+    volume DOUBLE NOT NULL DEFAULT 1.0,
+    loop_type SMALLINT NOT NULL DEFAULT 0,
+    bass_enabled BOOLEAN NOT NULL DEFAULT false,
+    bass_gain DOUBLE NOT NULL DEFAULT 20.0,
+    equalizer_32 DOUBLE NOT NULL DEFAULT 0.0,
+    equalizer_64 DOUBLE NOT NULL DEFAULT 0.0,
+    equalizer_125 DOUBLE NOT NULL DEFAULT 0.0,
+    equalizer_250 DOUBLE NOT NULL DEFAULT 0.0,
+    equalizer_500 DOUBLE NOT NULL DEFAULT 0.0,
+    equalizer_1k DOUBLE NOT NULL DEFAULT 0.0,
+    equalizer_2k DOUBLE NOT NULL DEFAULT 0.0,
+    equalizer_4k DOUBLE NOT NULL DEFAULT 0.0,
+    equalizer_8k DOUBLE NOT NULL DEFAULT 0.0,
+    equalizer_16k DOUBLE NOT NULL DEFAULT 0.0
+)

@@ -1,0 +1,13 @@
+pub mod ping;
+pub mod play;
+pub mod volume;
+pub mod pause;
+pub mod resume;
+pub mod skip;
+pub mod r#move;
+pub mod repeat;
+pub mod disconnect;
+pub mod join;
+pub mod password;
+pub mod speed;
+pub mod bass;

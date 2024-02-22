@@ -1,0 +1,7 @@
+/target
+.env
+/logs
+/.vscode
+db.sqlite3
+vk_parser.py
+cookies.txt
