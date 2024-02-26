@@ -4,6 +4,7 @@ pub mod track;
 pub mod playlist;
 pub mod player;
 pub mod parser;
+pub mod gstreamr_input;
 
 pub async fn get_voice_channel(ctx: &Context, command: &CommandInteraction) -> (Option<ChannelId>, Option<impl Into<String>>) {
     match ctx.cache.guild(command.guild_id.unwrap()) {

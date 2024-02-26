@@ -11,6 +11,7 @@ use tokio::time::sleep;
 use youtube_dl::SearchType;
 
 use crate::bot::events::TrackEndNotifier;
+use crate::bot::utils::gstreamr_input::GstreamerInput;
 use crate::bot::utils::parser::{parse_url, ParsedDataType, parse_track_yt, search_track_yt, search_track_vk};
 use crate::bot::utils::player::{PlayerData, initialize_guild_player, PlayerState, Position};
 use crate::bot::utils::track::{Track, PlaylistType};
@@ -201,16 +202,16 @@ pub async fn run(ctx: Context, command: CommandInteraction) {
                 *state = PlayerState::Playing;
                 *last_updated_position = Position::default();
 
-                let mut child = track.get_child(&ctx, &command.guild_id.unwrap().get(), 0.0).await.unwrap();
-                let stdin = child.stdin.take().unwrap();
-                let data = songbird::input::Input::from(songbird::input::ChildContainer::from(child));
+                // let mut child = track.get_child(&ctx, &command.guild_id.unwrap().get(), 0.0).await.unwrap();
+                // let stdin = child.stdin.take().unwrap();
+                let data = songbird::input::Input::from(GstreamerInput::new(&track.url).unwrap());
 
                 if let Some(handler_lock) = manager.get(command.guild_id.unwrap()) {
                     let mut handler = handler_lock.lock().await;
                     let mut ffmpeg = player.ffmpeg.write().await;
                     let mut player_handler = player.player.write().await;
 
-                    let _ = ffmpeg.insert(stdin);
+                    // let _ = ffmpeg.insert(stdin);
 
                     let handle = handler.play_only_input(data);
                     let _ = player_handler.insert(handle);
@@ -242,7 +243,7 @@ pub async fn run(ctx: Context, command: CommandInteraction) {
                                         let mut child = track.get_child(&ctx, &command.guild_id.unwrap().get(), 0.0).await.unwrap();
                                         let stdin = child.stdin.take().unwrap();
                                         let data = songbird::input::Input::from(songbird::input::ChildContainer::from(child));
-                        
+                                        
                                         if let Some(handler_lock) = manager.get(command.guild_id.unwrap()) {
                                             let mut handler = handler_lock.lock().await;
                                             let mut ffmpeg = player.ffmpeg.write().await;

@@ -78,6 +78,8 @@ async fn main() -> std::io::Result<()> {
         .filter_level(log::LevelFilter::Warn)
         .init();
 
+    gstreamer::init().expect("Failed to initialize GStreamer");
+
     let player_data: PlayerDataType = Arc::new(RwLock::new(HashMap::default()));
     let player_data_clone = player_data.clone();
 
