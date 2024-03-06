@@ -50,3 +50,18 @@ pub struct UpdateBass {
     pub bass_enabled: bool,
     pub bass_gain: f64,
 }
+
+#[derive(AsChangeset)]
+#[diesel(table_name = crate::schema::guild_settings)]
+pub struct UpdateEqualizer {
+    pub equalizer_32: f64,
+    pub equalizer_64: f64,
+    pub equalizer_125: f64,
+    pub equalizer_250: f64,
+    pub equalizer_500: f64,
+    pub equalizer_1k: f64,
+    pub equalizer_2k: f64,
+    pub equalizer_4k: f64,
+    pub equalizer_8k: f64,
+    pub equalizer_16k: f64
+}

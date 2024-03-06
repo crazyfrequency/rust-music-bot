@@ -11,3 +11,4 @@ pub mod join;
 pub mod password;
 pub mod speed;
 pub mod bass;
+pub mod equalizer;

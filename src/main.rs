@@ -1,7 +1,7 @@
 use std::{collections::HashMap, env, sync::Arc};
 
 use actix_web::{middleware, web, App, HttpResponse, HttpServer, Responder};
-use bot::{commands, utils::player::{PlayerData, PlayerDataType, PlayerDataBase}, auto_complete};
+use bot::{auto_complete, components, commands, utils::player::{PlayerData, PlayerDataBase, PlayerDataType}};
 use diesel::{r2d2::ConnectionManager, SqliteConnection};
 use serenity::{
     all::Command, async_trait, client::Cache, model::{gateway::Ready, application::Interaction}, prelude::*
@@ -33,11 +33,17 @@ impl EventHandler for DiscordClient {
                 "speed" => commands::speed::run(ctx, command).await,
                 "password" => commands::password::run(ctx, command).await,
                 "bass" => commands::bass::run(ctx, command).await,
+                "equalizer" => commands::equalizer::run(ctx, command).await,
                 _ => {}
             },
             Interaction::Autocomplete(autocomplete) => match autocomplete.data.name.as_str() {
                 "skip" => auto_complete::skip::run(ctx, autocomplete).await,
                 "move" => auto_complete::r#move::run(ctx, autocomplete).await,
+                _ => {}
+            },
+            Interaction::Component(component) => match component.data.custom_id.as_str() {
+                "eq_update" => components::equalizer_button::run(ctx, component).await,
+                "eq_presets1" | "eq_presets2" => components::equalizer_menu::run(ctx, component).await,
                 _ => {}
             }
             _ => {}
@@ -61,6 +67,7 @@ impl EventHandler for DiscordClient {
             commands::speed::register(),
             commands::password::register(),
             commands::bass::register(),
+            commands::equalizer::register()
         ]).await.expect("commands load error");
     }
 }
